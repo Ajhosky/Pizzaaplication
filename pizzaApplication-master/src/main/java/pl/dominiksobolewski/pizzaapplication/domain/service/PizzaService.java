@@ -34,14 +34,18 @@ public class PizzaService {
         checkToken(token);
         PizzaEntity pizzaEntity = pizzaMapper.mapToPizzaEntity(addPizzaDto);
         pizzaRepository.save(pizzaEntity);
-        List<AddSizeDto> addSizeDtoList = addPizzaDto.getAddSizeDtoList();
+        List<AddSizeDto> addSizeDtoList = addPizzaDto.getSizes();
         List<SizeEntity> sizeEntity = addSizeDtoList
                 .stream()
                 .map(addSizeDto -> sizeMapper.mapToSizeEntity(addSizeDto, pizzaEntity.getId()))
                 .collect(Collectors.toList());
         sizeRepository.saveAll(sizeEntities);
 
- //       List<SizeDto> sizeDtoList = sizeEntities.stream().map(sizeMapper::mapToSizeDto).collect(Collectors.toList());
+        List<SizeDto> sizeDtoList = sizeEntities;
+        .stream()
+                .map(sizeEntity -> sizeMapper.mapToSizeDto(sizeEntity))
+                .collect(Collectors.toList());
+       List<SizeDto> sizeDtoList = sizeEntities.stream().map(sizeMapper::mapToSizeDto).collect(Collectors.toList());
 //
 //         List<AddSizeDto> addSizeDtoList = addPizzaDto.getAddSizeDtoList();
 //         List<SizeEntity> sizeEntities = addSizeDtoList
