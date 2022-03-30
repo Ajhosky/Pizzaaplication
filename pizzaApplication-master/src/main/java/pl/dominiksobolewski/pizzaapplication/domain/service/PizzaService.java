@@ -39,11 +39,19 @@ public class PizzaService {
         PizzaEntity savedSizeEntity = sizeRepository.saveAll(sizeEntity);
         List<SizeDto> sizeDtoList = sizeEntities.stream().map(sizeMapper::mapToSizeDto).collect(Collectors.toList());
 
-        SizeEntity sizeEntity = new SizeEntity()();
-        sizeEntity.setSizeType(sizeDto.getSize().name());
-        sizeEntity.setPriceBase(sizeDto.getPrice());
-        sizeEntity.setId(sizeDto.getId());
-        sizeEntity.setPizzaId(savedPizzaEntity.getId());
+         List<AddSizeDto> addSizeDtoList = addPizzaDto.getAddSizeDtoList();
+         List<SizeEntity> sizeEntities = addSizeDtoList
+                 .stream()
+                 .map(addSizeDto -> {
+                     SizeEntity sizeEntity = new SizeEntity()();
+                     sizeEntity.setSizeType(sizeDto.getSize().name());
+                     sizeEntity.setPriceBase(sizeDto.getPrice());
+                     sizeEntity.setId(sizeDto.getId());
+                     sizeEntity.setPizzaId(savedPizzaEntity.getId());
+                     return sizeEntity;
+                 }).collect(Collectors.toList());
+         PizzaEntity savedSizeEntity = sizeRepository.saveAll(sizeEntity);
+
 
     }
 
