@@ -16,10 +16,12 @@ public class SizeMapper {
         return sizeEntity;
     }
 
-    public mapToSizeDto(SizeEntity sizeEntity){
-        SizeDto sizeDto = new SizeDto();
-        sizeDto.setSize(SizeType.valueOf(sizeEntity().getSizeType()));
-
-    });
-    }
+//    public mapToSizeDto(SizeEntity sizeEntity){
+//        SizeDto sizeDto = new SizeDto();
+//        sizeDto.setSize(SizeType.valueOf(sizeEntity().getSizeType()));
+//
+//
+//        return sizeDto;
+//    });
+//    }
 }
