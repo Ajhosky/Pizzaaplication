@@ -1,5 +1,6 @@
 package pl.dominiksobolewski.pizzaapplication.domain.service;
 
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.dominiksobolewski.pizzaapplication.data.entity.pizza.PizzaEntity;
 import pl.dominiksobolewski.pizzaapplication.data.entity.size.SizeEntity;
@@ -9,6 +10,8 @@ import pl.dominiksobolewski.pizzaapplication.domain.mapper.PizzaMapper;
 import pl.dominiksobolewski.pizzaapplication.domain.mapper.SizeMapper;
 import pl.dominiksobolewski.pizzaapplication.remote.rest.dto.request.AddPizzaDto;
 import pl.dominiksobolewski.pizzaapplication.remote.rest.dto.request.AddSizeDto;
+import pl.dominiksobolewski.pizzaapplication.remote.rest.dto.request.UpdatePizzaDto;
+import pl.dominiksobolewski.pizzaapplication.remote.rest.dto.response.PizzaDto;
 import pl.dominiksobolewski.pizzaapplication.remote.rest.dto.response.SizeDto;
 
 import java.util.List;
@@ -28,6 +31,13 @@ public class PizzaService {
         this.sizeRepository = sizeRepository;
         this.pizzaMapper = pizzaMapper;
         this.sizeMapper = sizeMapper;
+    }
+    public PizzaDto updatePizza(UpdatePizzaDto updatePizzaDto, String token, Integer pizzaId){
+        checkToken(token);
+        boolean pizzaExist = pizzaRepository.existsById(pizzaId);
+        if (!pizzaExist){
+            throw new ConfigDataResourceNotFoundException("Pizza o podanym id nie istnieje");
+        }
     }
 
     public addPizza(AddPizzaDto addPizzaDto, String token){
